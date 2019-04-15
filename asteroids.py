@@ -219,10 +219,13 @@ def main():
    pg.mouse.set_visible(1)
    clock = pg.time.Clock()
  
-   ship=Ship();
-   bullets=[];
+   ship=Ship()
+   bullets=[]
    bombs=[]
-   Asteroids =[];
+   Asteroids =[]
+   bTimeOut = 0
+   sTimeOut =0
+   
 
    for each in range(0,5):
       Asteroids.append(Asteroid(random.randrange(0,w),random.randrange(0,h),speed=random.randrange(1,10),theta=random.randrange(0,360)))
@@ -248,8 +251,9 @@ def main():
       if keys[pg.K_d] or keys[pg.K_RIGHT]:
          ship.right()
       if keys[pg.K_SPACE]: #Shoot
-         if len(bullets) <= MAX_BULLETS: # Not too many bullets
+         if len(bullets) <= MAX_BULLETS and sTimeOut < 0: # Not too many bullets
             bullets.append(Bullet(ship.x,ship.y,ship.vx,ship.vy,ship.theta))
+            sTimeOut = 3
       if keys[pg.K_s]: #shields
          if numShields < MAX_SHIELDS and not ship.shield:
           numShields=numShields+1  
@@ -257,9 +261,11 @@ def main():
           ship.shieldTime= 80
 
       if keys[pg.K_b]: #bomb
-         if len(bombs) < MAX_BOMBS: # Not too many bombs
-            bombs.append(Bomb(ship.x,ship.y,ship.vx,ship.vy,ship.theta))
-
+         if len(bombs) < MAX_BOMBS and bTimeOut < 0 : # Not too many bombs
+             bTimeOut = 5
+             bombs.append(Bomb(ship.x,ship.y,ship.vx,ship.vy,ship.theta))
+      sTimeOut = sTimeOut - 1
+      bTimeOut = bTimeOut - 1
 # Draw, move and detect collisions for asteroids
       for asteroid in Asteroids:
          asteroid.move();
