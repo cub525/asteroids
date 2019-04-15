@@ -23,7 +23,7 @@ w = 640;
 h = 480;
 MAX_BULLETS = 5;
 MAX_BOMBS = 3;
-MAX_SHIELDS = 3;
+MAX_SHIELDS = 0;
 
 # Game States
 MENU = 0
@@ -241,11 +241,11 @@ def main():
             pos=pg.mouse.get_pos()
             Asteroids.append(L_Asteroid(pos[0],pos[1],speed=random.randrange(1,10),theta=random.randrange(0,360)))
       keys = pg.key.get_pressed()
-      if keys[pg.K_UP]:
+      if keys[pg.K_w] or keys[pg.K_UP]:
          ship.forward()
-      if keys[pg.K_LEFT]:
+      if keys[pg.K_a] or keys[pg.K_LEFT]:
          ship.left()
-      if keys[pg.K_RIGHT]:
+      if keys[pg.K_d] or keys[pg.K_RIGHT]:
          ship.right()
       if keys[pg.K_SPACE]: #Shoot
          if len(bullets) <= MAX_BULLETS: # Not too many bullets
@@ -315,10 +315,11 @@ def main():
       pg.time.delay(50)
       
    # End while(gameOver)
-   
+   while (gameState == GAMEOVER):
+       GetInput()
    #Blank the screen and do nothing
-   screen.fill([0,0,0]);
-   pg.display.flip();
+       screen.fill([0,0,0])
+       pg.display.flip()
 
 
 if __name__ == '__main__': main()
