@@ -23,7 +23,7 @@ w = 640;
 h = 480;
 MAX_BULLETS = 5;
 MAX_BOMBS = 3;
-MAX_SHIELDS = 0;
+MAX_SHIELDS = 3;
 
 # Game States
 MENU = 0
