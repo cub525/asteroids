@@ -253,8 +253,8 @@ def main():
       if keys[pg.K_s]: #shields
          if numShields < MAX_SHIELDS and not ship.shield:
           numShields=numShields+1  
-     # ship.shield=True
-      #ship.shieldTime=2
+          ship.shield=True
+          ship.shieldTime= 80
 
       if keys[pg.K_b]: #bomb
          if len(bombs) < MAX_BOMBS: # Not too many bombs
