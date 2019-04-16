@@ -19,11 +19,11 @@ pg.init()
 
 
 # Globals for now.
-w = 640;
-h = 480;
-MAX_BULLETS = 5;
-MAX_BOMBS = 3;
-MAX_SHIELDS = 3;
+w = 640 
+h = 480 
+MAX_BULLETS = 5 
+MAX_BOMBS = 3 
+MAX_SHIELDS = 3 
 
 # Game States
 MENU = 0
@@ -38,10 +38,10 @@ class Bullet:
       self.vx=vx
       self.vy=vy
       self.theta=theta
-      self.color=[255,0,0];
+      self.color=[255,0,0] 
       self.speed=10
-      self.dist=0;
-      self.length=10;
+      self.dist=0 
+      self.length=10 
       self.tailx =self.x+self.length*math.sin(self.theta-math.pi)
       self.taily =self.y-self.length*math.cos(self.theta-math.pi)
    def move(self):
@@ -60,10 +60,10 @@ class Boomerang:
       self.vx=vx
       self.vy=vy
       self.theta=theta
-      self.color=[0,0,255];
+      self.color=[0,0,255] 
       self.speed=15
-      self.dist=0;
-      self.length=10;
+      self.dist=0 
+      self.length=10 
       self.tailx =self.x+self.length*math.sin(self.theta-math.pi)
       self.taily =self.y-self.length*math.cos(self.theta-math.pi)
    def move(self):
@@ -82,10 +82,10 @@ class Bomb:
       self.vx=vx
       self.vy=vy
       self.theta=theta
-      self.color=[75,75,75];
+      self.color=[75,75,75] 
       self.speed=15
-      self.dist=0;
-      self.length=15;
+      self.dist=0 
+      self.length=15 
       self.tailx =self.x+self.length*math.sin(self.theta-math.pi)
       self.taily =self.y-self.length*math.cos(self.theta-math.pi)
       self.detonate = False
@@ -102,7 +102,7 @@ class Bomb:
       self.detonate = det
       self.size = 5*15
    def dirtyCollDetect(self,asteroid):
-      dist=self.distance(asteroid.x,asteroid.y);
+      dist=self.distance(asteroid.x,asteroid.y) 
       return dist <= (self.size)
    def distance(self,x,y):
       return math.sqrt((self.x-x)**2+(self.y-y)**2)
@@ -110,18 +110,18 @@ class Bomb:
 
 class Ship:
    def __init__(self,size=15,Color=(255,255,255)):
-      self.x=w/2;
-      self.y=h/2;
-      self.vx=0;
-      self.vy=0;
-      self.theta=0; #Body Orientation
-      self.color=Color;
-      self.size=size;
+      self.x=w/2 
+      self.y=h/2 
+      self.vx=0 
+      self.vy=0 
+      self.theta=0  #Body Orientation
+      self.color=Color 
+      self.size=size 
       self.theta_dot=0.2
       self.speed_dot=1
-      self.base=size;
-      self.height=1.5*size;
-      self.max_speed=50;
+      self.base=size 
+      self.height=1.5*size 
+      self.max_speed=50 
       self.shield=True
       self.shieldTime=2*40
    def move(self):
@@ -148,11 +148,11 @@ class Ship:
       #There is probably some built-in type that would make this easier.
       #This isn't any of the definitions of the center of triangle, close enough for today
       vself=[[-self.base*0.5,self.height*0.5],[self.base*0.5,self.height*0.5],[0,-self.height*0.5]]
-      vrot=self.rot(vself);
-      v=self.bias(vrot);
+      vrot=self.rot(vself) 
+      v=self.bias(vrot) 
       return v
    def rot(self,v):
-      vrot=[];
+      vrot=[] 
       for i in range(0,3):
          vrot.append([math.cos(self.theta)*v[i][0] - math.sin(self.theta)*v[i][1],
          math.sin(self.theta)*v[i][0] + math.cos(self.theta)*v[i][1] ])
@@ -167,7 +167,7 @@ class Ship:
       if self.shield:
          return False
       else:
-         dist=self.distance(asteroid.x,asteroid.y);
+         dist=self.distance(asteroid.x,asteroid.y) 
          return dist <= (asteroid.size+self.size/2.0)
 
 
@@ -188,13 +188,13 @@ class Asteroid(object):
       return math.sqrt((self.x-x)**2+(self.y-y)**2)
 # Only reliable for explosions, not inelastic collisions
    def dirtyCollDetect(self,bullet):
-      dist=self.distance(bullet.x,bullet.y);
+      dist=self.distance(bullet.x,bullet.y) 
       return dist <= (self.size)
 
 class L_Asteroid(Asteroid):
    def __init__(self,x,y,speed,theta):
       super(L_Asteroid, self).__init__(x,y,speed,theta)
-      self.size = 30;
+      self.size = 30 
    def split(self):
       return [Asteroid(self.x,self.y,speed=random.randrange(1,10),theta=random.randrange(0,360)),
               Asteroid(self.x,self.y,speed=random.randrange(1,10),theta=random.randrange(0,360))]
@@ -212,7 +212,7 @@ def main():
    # This causes holding a key down to cause repeated keydown events in the gueue,
    # the 2nd event is after argv[1] milliseconds and the nth delay is after argv[2]
    # milliseconds
-   numShields = 0;
+   numShields = 0 
    pg.key.set_repeat(10, 10)
    screen = pg.display.set_mode((w,h))
    pg.display.set_caption(r"Emmett's Asteroids")
@@ -236,7 +236,7 @@ def main():
    while (not (gameState == GAMEOVER)):
       GetInput()
       clock.tick(120)
-      screen.fill([0,0,0]);
+      screen.fill([0,0,0]) 
       for event in pg.event.get():
          if event.type==pg.QUIT:
             sys.exit()
@@ -268,7 +268,7 @@ def main():
       bTimeOut = bTimeOut - 1
 # Draw, move and detect collisions for asteroids
       for asteroid in Asteroids:
-         asteroid.move();
+         asteroid.move() 
          if ship.dirtyCollDetect(asteroid) or gameState == GAMEOVER:
             gameState = GAMEOVER
          for b in bullets:
@@ -283,7 +283,7 @@ def main():
                Asteroids.remove(asteroid)
                b.set_detonate(True)
                break
-         pg.draw.circle(screen,asteroid.color,[int(asteroid.x),int(asteroid.y)],asteroid.size);
+         pg.draw.circle(screen,asteroid.color,[int(asteroid.x),int(asteroid.y)],asteroid.size) 
 
 # draw and move bullets      
       for b in bullets:
@@ -311,13 +311,13 @@ def main():
                b.color = [75,75,75]
 
 # Draw and move ship       
-      ship.move();
+      ship.move() 
       pg.draw.polygon(screen, ship.color, ship.vertices() )
       if ship.shield:
-         pg.draw.circle(screen,(255,0,0),[int(ship.x),int(ship.y)],ship.size, 2);
+         pg.draw.circle(screen,(255,0,0),[int(ship.x),int(ship.y)],ship.size, 2) 
 
 # Update the screen and wait for the next frame
-      pg.display.flip();
+      pg.display.flip() 
       pg.time.delay(50)
       
    # End while(gameOver)
