@@ -53,28 +53,6 @@ class Bullet:
       self.tailx =self.x+self.length*math.sin(self.theta-math.pi) 
       self.taily =self.y-self.length*math.cos(self.theta-math.pi)
 
-class Boomerang:
-   def __init__(self,x,y,vx,vy,theta):
-      self.x=x
-      self.y=y
-      self.vx=vx
-      self.vy=vy
-      self.theta=theta
-      self.color=[0,0,255] 
-      self.speed=15
-      self.dist=0 
-      self.length=10 
-      self.tailx =self.x+self.length*math.sin(self.theta-math.pi)
-      self.taily =self.y-self.length*math.cos(self.theta-math.pi)
-   def move(self):
-      self.x+=self.speed*math.sin(self.theta)+self.vx
-      self.y+=-self.speed*math.cos(self.theta)+self.vy
-      self.dist+=self.speed
-      self.x %= w
-      self.y %= h
-      self.tailx =self.x+self.length*math.sin(self.theta-math.pi) 
-      self.taily =self.y-self.length*math.cos(self.theta-math.pi)
-
 class Bomb:
    def __init__(self,x,y,vx,vy,theta):
       self.x=x
@@ -103,7 +81,7 @@ class Bomb:
       self.size = 5*15
    def dirtyCollDetect(self,asteroid):
       dist=self.distance(asteroid.x,asteroid.y) 
-      return dist <= (self.size)
+      return dist <= (asteroid.size + self.size/2)
    def distance(self,x,y):
       return math.sqrt((self.x-x)**2+(self.y-y)**2)
 
