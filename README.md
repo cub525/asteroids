@@ -8,4 +8,3 @@ Planned changes:
 S as reverse thrust
 E or similar as bombs
 Shift as sheild
-fix dirtyCollDetect for bombs (currently they have the incorrect radius).
