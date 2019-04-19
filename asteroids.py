@@ -216,10 +216,8 @@ def main():
       clock.tick(120)
       screen.fill([0,0,0]) 
       for event in pg.event.get():
-         if event.type==pg.QUIT:
-            sys.exit()
-         if event.type==(pg.MOUSEBUTTONDOWN):
-            pos=pg.mouse.get_pos()
+         if event.type == pg.MOUSEBUTTONDOWN:
+            pos = pg.mouse.get_pos()
             Asteroids.append(L_Asteroid(pos[0],pos[1],speed=random.randrange(1,10),theta=random.randrange(0,360)))
       keys = pg.key.get_pressed()
       if keys[pg.K_w] or keys[pg.K_UP]:
